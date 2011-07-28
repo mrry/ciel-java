@@ -26,6 +26,7 @@ setup(
     package_dir = { '' : 'src/python' },
     data_files = [ ("lib/ciel", ["java-dist/ciel-0.1.jar"]),
                    ("lib/ciel", ["java-dist/gson-1.7.1.jar"])],
+    entry_points = {'ciel.executor.plugin':['load=ciel.executors.java:load']},
     classifiers = [
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
