@@ -19,6 +19,12 @@ from skywriting.runtime.executors import hash_update_with_structure,\
 import ciel
 import os
 import logging
+import pkg_resources
+
+CIEL_BINDINGS_PATH = pkg_resources.resource_filename(pkg_resources.Requirement.parse("ciel-java"), "lib/ciel/ciel-0.1.jar")
+GSON_PATH = pkg_resources.resource_filename(pkg_resources.Requirement.parse("ciel-java"), "lib/ciel/gson-1.7.1.jar")
+
+JAVA2_CLASSPATH = ":".join([CIEL_BINDINGS_PATH, GSON_PATH])
 
 class Java2Executor(ProcExecutor):
     
@@ -69,13 +75,8 @@ class Java2Executor(ProcExecutor):
         return ProcExecutor.build_task_descriptor(task_descriptor, parent_task_record, n_extra_outputs=0, is_tail_spawn=is_tail_spawn, accept_ref_list_for_single=True, **kwargs)
         
     def get_command(self):
-        return ["java", "-Xmx2048M", "-cp", os.getenv('CLASSPATH'), "com.asgow.ciel.executor.Java2Executor"]
+        return ["java", "-Xmx2048M", "-cp", JAVA2_CLASSPATH, "com.asgow.ciel.executor.Java2Executor"]
 
     @staticmethod
     def can_run():
-        cp = os.getenv("CLASSPATH")
-        if cp is None:
-            ciel.log.error("Can't run Java: no CLASSPATH set", "JAVA", logging.WARNING)
-            return False
-        else:
-            return test_program(["java", "-cp", cp, "com.asgow.ciel.executor.Java2Executor", "--version"], "Java")
+        return test_program(["java", "-cp", JAVA2_CLASSPATH, "com.asgow.ciel.executor.Java2Executor", "--version"], "Java")

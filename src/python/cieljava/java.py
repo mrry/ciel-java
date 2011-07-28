@@ -18,7 +18,9 @@ from skywriting.runtime.executors.simple import FilenamesOnStdinExecutor
 from skywriting.runtime.executors import test_program
 from skywriting.runtime.exceptions import BlameUserException
 from skywriting.runtime.fetcher import retrieve_filenames_for_refs
+import pkg_resources
 
+CIEL_BINDINGS_PATH = pkg_resources.resource_filename(pkg_resources.Requirement.parse("ciel-java"), "lib/ciel/ciel-0.1.jar")
 
 class JavaExecutor(FilenamesOnStdinExecutor):
 
@@ -29,12 +31,7 @@ class JavaExecutor(FilenamesOnStdinExecutor):
 
     @staticmethod
     def can_run():
-        cp = os.getenv("CLASSPATH")
-        if cp is None:
-            ciel.log.error("Can't run Java: no CLASSPATH set", "JAVA", logging.WARNING)
-            return False
-        else:
-            return test_program(["java", "-cp", cp, "uk.co.mrry.mercator.task.JarTaskLoader", "--version"], "Java")
+        return test_program(["java", "-cp", CIEL_BINDINGS_PATH, "uk.co.mrry.mercator.task.JarTaskLoader", "--version"], "Java")
 
     @classmethod
     def check_args_valid(cls, args, n_outputs):
@@ -54,8 +51,7 @@ class JavaExecutor(FilenamesOnStdinExecutor):
         self.jar_filenames = retrieve_filenames_for_refs(self.jar_refs, self.task_record)
 
     def get_process_args(self):
-        cp = os.getenv('CLASSPATH')
-        process_args = ["java", "-cp", cp]
+        process_args = ["java", "-cp", CIEL_BINDINGS_PATH]
         if "trace_io" in self.debug_opts:
             process_args.append("-Dskywriting.trace_io=1")
         process_args.extend(["uk.co.mrry.mercator.task.JarTaskLoader", self.class_name])

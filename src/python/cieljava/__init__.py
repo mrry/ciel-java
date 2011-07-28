@@ -12,8 +12,8 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from ciel.executors.java.java import JavaExecutor
-from ciel.executors.java.java2 import Java2Executor
+from cieljava.java import JavaExecutor
+from cieljava.java2 import Java2Executor
 
 def load():
     return [JavaExecutor, Java2Executor]

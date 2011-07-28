@@ -22,11 +22,11 @@ setup(
     author = "Derek Murray",
     author_email = "Derek.Murray@cl.cam.ac.uk",
     url = "http://www.cl.cam.ac.uk/netos/ciel/",
-    packages = [ 'ciel.executors.java' ],
+    packages = [ 'cieljava' ],
     package_dir = { '' : 'src/python' },
     data_files = [ ("lib/ciel", ["java-dist/ciel-0.1.jar"]),
                    ("lib/ciel", ["java-dist/gson-1.7.1.jar"])],
-    entry_points = {'ciel.executor.plugin':['load=ciel.executors.java:load']},
+    entry_points = {'ciel.executor.plugin':['load=cieljava:load']},
     classifiers = [
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
