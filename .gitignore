@@ -1,3 +1,5 @@
+/build
+/src/python/ciel_java.egg-info
 /java-build
 /java-dist
 /bin
@@ -10,12 +12,6 @@ parsetab.py
 *~
 *.jar
 *.class
-/store
-/journal
-/src/python/shared/generated/
-/src/java/com/asgow/ciel/protocol/
-/src/c/src/loader
-/src/csharp/bin/
 *.dll
 *.exe
 *.o
