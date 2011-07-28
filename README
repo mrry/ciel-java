@@ -1,10 +1,5 @@
-CIEL is an execution engine for distributed, parallel
-computation. Like previous frameworks (such as MapReduce and Dryad),
-it masks the complexity of distributed programming. Unlike those
-frameworks, it offers a full general-purpose programming language,
-called Skywriting, for expressing distributed coordination, which
-enables developers to implement algorithms using arbitrary task
-structures.
+This package contains the Java bindings for the CIEL distributed
+execution engine.
 
 For documentation, tutorials and examples, please visit:
 

@@ -1,2 +1,3 @@
-include src/python/skywriting/runtime/lighttpd.conf
-include src/sw/stdlib/*
+exclude java-dist/*.jar
+include build.xml
+recursive-include src/java *.java

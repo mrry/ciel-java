@@ -1,36 +1,39 @@
 from setuptools import setup
+import subprocess
+import glob
+import os
+
+CIEL_JAR = os.path.join("java-dist", "ciel-0.1.jar")
+GSON_JAR = os.path.join("java-dist", "gson-1.7.1.jar")
+
+built_jars = glob.glob("java-dist/*.jar")
+if not CIEL_JAR in built_jars or not GSON_JAR in built_jars:
+    try:
+        subprocess.check_call("ant")
+    except subprocess.CalledProcessError:
+        import sys
+        print >>sys.stderr, "Error building Java files."
+        sys.exit(-1)
 
 setup(
-    name = "ciel",
+    name = "ciel-java",
     version = '0.1-dev',
-    description = "Execution engine for distributed, parallel computation",
+    description = "Java bindings for the CIEL distributed execution engine",
     author = "Derek Murray",
     author_email = "Derek.Murray@cl.cam.ac.uk",
     url = "http://www.cl.cam.ac.uk/netos/ciel/",
-    packages = [ 'skywriting', 'skywriting.lang', 'skywriting.runtime',
-                 'skywriting.runtime.master', 'skywriting.runtime.worker',
-                 'skywriting.runtime.executors', 'skywriting.runtime.util', 'ciel', 'shared' ],
+    packages = [ 'ciel.executors.java' ],
     package_dir = { '' : 'src/python' },
-    scripts = [ "scripts/%s" %s for s in
-                  ['ciel-killall.sh', 'ciel-kill-cluster', 'ciel-launch-cluster',
-                   'ciel-launch-master', 'ciel-launch-worker', 'ciel-poll-job',
-                   'ciel-print-job-result', 'ciel-run-job', 'ciel-run-job-async',
-                   'ciel-task-crawler', 'sw-job', 'sw-master', 'sw-start-job', 
-                   'sw-worker', 'skywriting'] ],
-    data_files = [ ("share/ciel/", ["src/python/skywriting/runtime/lighttpd.conf"]),
-                   ("share/ciel/skywriting/stdlib/",
-                   ["src/sw/stdlib/%s" %s for s in
-                     ["environ", "grab", "java", "mapreduce",
-                      "stdinout", "sync"]])],
+    data_files = [ ("lib/ciel", ["java-dist/ciel-0.1.jar"]),
+                   ("lib/ciel", ["java-dist/gson-1.7.1.jar"])],
     classifiers = [
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
             'Intended Audience :: Science/Research',
             'License :: OSI Approved :: ISC License (ISCL)',
             'Operating System :: POSIX',
-            'Topic :: Software Development :: Interpreters',
             'Topic :: System :: Distributed Computing',
         ],
-    requires=['simplejson', 'CherryPy (>=3.1.0)', 'ply', 'pycurl', 'httplib2' ]
+    requires=['ciel (>=0.1)']
 )
 
