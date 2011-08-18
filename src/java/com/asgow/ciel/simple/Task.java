@@ -16,7 +16,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package uk.co.mrry.mercator.task;
+package com.asgow.ciel.simple;
 
 import java.io.InputStream;
 import java.io.OutputStream;

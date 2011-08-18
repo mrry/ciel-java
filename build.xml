@@ -15,7 +15,7 @@
   <target name="fetch-dependencies">
     <mkdir dir="ext/"/>
     <mkdir dir="java-dist"/>
-    <get src="http://google-gson.googlecode.com/files/google-gson-1.7.1-release.zip" dest="ext"/>
+    <get src="http://google-gson.googlecode.com/files/google-gson-1.7.1-release.zip" dest="ext/google-gson-1.7.1-release.zip"/>
     <unzip src="ext/google-gson-1.7.1-release.zip" dest="ext"/>
     <copy file="ext/google-gson-1.7.1/gson-1.7.1.jar" todir="java-dist"/>
   </target>
@@ -31,7 +31,6 @@
     <mkdir dir="java-dist"/>
     <sequential>
       <jar destfile="java-dist/ciel-0.1.jar">
-	<fileset dir="java-build" includes="uk/co/mrry/mercator/task/**"/>
 	<fileset dir="java-build" includes="com/asgow/ciel/**"/>
       </jar>
     </sequential>

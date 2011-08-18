@@ -1,4 +1,4 @@
-package uk.co.mrry.mercator.task;
+package com.asgow.ciel.simple;
 
 import java.net.URL;
 import java.net.MalformedURLException;
