@@ -16,6 +16,13 @@
     additionally be used to support dynamic data-dependent control
     flow within a job (for iterative and recursive algorithms).
   </description>
+  <licenses>
+    <license>
+      <name>ISC</name>
+      <distribution>repo</distribution>
+      <comments>BSD-style license</comments>
+    </license>
+  </licenses>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -45,6 +52,14 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>unix-maven-plugin</artifactId>
         <version>1.0-alpha-5</version>
+	<configuration>
+	  <contact>Derek Murray</contact>
+	  <contactEmail>Derek.Murray@cl.cam.ac.uk</contactEmail>
+	  <deb>
+	    <priority>optional</priority>
+	    <section>Java</section>
+	  </deb>
+	</configuration>
       </plugin>
     </plugins>
   </build>
