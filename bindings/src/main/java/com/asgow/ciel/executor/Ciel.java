@@ -14,6 +14,7 @@ import com.asgow.ciel.references.CielFuture;
 import com.asgow.ciel.references.Reference;
 import com.asgow.ciel.references.WritableReference;
 import com.asgow.ciel.rpc.WorkerRpc;
+import com.asgow.ciel.tasks.ConstantNumOutputsTask;
 import com.asgow.ciel.tasks.FirstClassJavaTask;
 import com.asgow.ciel.tasks.FirstClassJavaTaskInformation;
 import com.asgow.ciel.tasks.SingleOutputTask;
@@ -68,7 +69,9 @@ public final class Ciel {
 		
 		FirstClassJavaTaskInformation fcjti = new FirstClassJavaTaskInformation(objRef, Ciel.jarLib, args, numOutputs);
 		for (Reference dependency : taskObject.getDependencies()) {
-			fcjti.addDependency(dependency);
+			if (dependency != null) {
+				fcjti.addDependency(dependency);
+			}
 		}
 		return Ciel.RPC.spawnTask(fcjti);
 	}
@@ -76,6 +79,10 @@ public final class Ciel {
 	public static Reference[] spawn(Class<? extends FirstClassJavaTask> taskClass, String[] args, int numOutputs) {
 		FirstClassJavaTaskInformation fcjti = new FirstClassJavaTaskInformation(taskClass, Ciel.jarLib, args, numOutputs);
 		return Ciel.RPC.spawnTask(fcjti);
+	}
+	
+	public static Reference[] spawn(ConstantNumOutputsTask taskObject) throws IOException {
+		return Ciel.spawn(taskObject, new String[0], taskObject.getNumOutputs());
 	}
 	
 	public static <T> CielFuture<T> spawn(Class<? extends SingleOutputTask<T>> taskClass, String[] args) {
@@ -86,6 +93,10 @@ public final class Ciel {
 		return new CielFuture<T>(Ciel.spawn(taskObject, null, 1)[0]);
 	}
 
+	public static void tailSpawn(FirstClassJavaTask taskObject) throws IOException {
+		Ciel.tailSpawn(taskObject, new String[0]);
+	}
+	
 	public static void tailSpawn(FirstClassJavaTask taskObject, String[] args) throws IOException {
 		WritableReference objOut = Ciel.RPC.getNewObjectFilename("obj");
 		ObjectOutputStream oos = new ObjectOutputStream(objOut.open());
@@ -95,7 +106,9 @@ public final class Ciel {
 		
 		FirstClassJavaTaskInformation fcjti = new FirstClassJavaTaskInformation(objRef, Ciel.jarLib, args);
 		for (Reference dependency : taskObject.getDependencies()) {
-			fcjti.addDependency(dependency);
+			if (dependency != null) {
+				fcjti.addDependency(dependency);
+			}
 		}
 		Ciel.RPC.tailSpawnTask(fcjti);
 	}

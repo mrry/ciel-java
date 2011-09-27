@@ -6,7 +6,7 @@ import com.asgow.ciel.executor.Ciel;
 import com.asgow.ciel.references.Reference;
 import com.asgow.ciel.references.WritableReference;
 
-public abstract class SingleOutputTask<T> implements FirstClassJavaTask {
+public abstract class SingleOutputTask<T> implements ConstantNumOutputsTask {
 
 	private static final long serialVersionUID = 2685291728220990030L;
 
@@ -26,6 +26,10 @@ public abstract class SingleOutputTask<T> implements FirstClassJavaTask {
 		return new Reference[0];
 	}
 	
-	public abstract T run();
+	public int getNumOutputs() {
+		return 1;
+	}
+	
+	public abstract T run() throws Exception;
 	
 }

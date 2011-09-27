@@ -369,12 +369,17 @@ public class JsonPipeRpc implements WorkerRpc {
 		JsonObject args = new JsonObject();
 		args.add("key", new JsonPrimitive(key));
 		JsonElement response = this.sendReceiveMessage(PACKAGE_LOOKUP, args).getAsJsonArray().get(1).getAsJsonObject();
-		JsonElement value = response.getAsJsonObject().get("value");
-		if (value == null) {
+		try {
+			JsonElement value = response.getAsJsonObject().get("value");
+			if (value == null) {
+				return null;
+			}
+			Reference result = Reference.fromJson(value.getAsJsonObject());
+			return result;
+		} catch (IllegalStateException ise) {
+			// XXX: Would be better to have an RPC result that does not cause an exception.
 			return null;
 		}
-		Reference result = Reference.fromJson(value.getAsJsonObject());
-		return result;
 	}
 
 	public Reference tryPackageLookup(String key) {
