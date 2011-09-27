@@ -15,7 +15,6 @@ import com.google.gson.JsonPrimitive;
 
 class RefComparator implements Comparator<Reference> {
 
-	@Override
 	public int compare(Reference arg0, Reference arg1) {
 		return arg0.getId().compareTo(arg1.getId());
 	}

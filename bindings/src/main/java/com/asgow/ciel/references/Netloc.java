@@ -52,7 +52,6 @@ public class Netloc implements Comparable<Netloc>, Serializable {
 		return this.hostname.hashCode() + this.port;
 	}
 
-	@Override
 	public int compareTo(Netloc o) {
 		return this.hostname.compareTo(o.hostname) + (this.port - o.port);
 	}

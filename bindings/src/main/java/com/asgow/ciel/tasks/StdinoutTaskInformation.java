@@ -15,7 +15,6 @@ public class StdinoutTaskInformation implements TaskInformation {
 		this.commandLine = commandLine;
 	}
 
-	@Override
 	public JsonObject toJson() {
 		JsonObject ret = new JsonObject();
 		ret.add("executor_name", new JsonPrimitive("stdinout"));

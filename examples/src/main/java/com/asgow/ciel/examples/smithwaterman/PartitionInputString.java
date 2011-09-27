@@ -1,13 +1,13 @@
-package skywriting.examples.smithwaterman;
+package com.asgow.ciel.examples.smithwaterman;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import uk.co.mrry.mercator.task.Task;
+import com.asgow.ciel.tasks.FirstClassJavaTask;
 
-public class PartitionInputString implements Task {
+public class PartitionInputString implements FirstClassJavaTask {
 
 	@Override
 	public void invoke(InputStream[] fis, OutputStream[] fos, String[] args) {

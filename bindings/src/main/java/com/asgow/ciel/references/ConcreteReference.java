@@ -17,7 +17,6 @@ package com.asgow.ciel.references;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

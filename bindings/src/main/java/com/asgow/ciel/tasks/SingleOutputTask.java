@@ -10,7 +10,6 @@ public abstract class SingleOutputTask<T> implements FirstClassJavaTask {
 
 	private static final long serialVersionUID = 2685291728220990030L;
 
-	@Override
 	public void invoke() throws Exception {
 		T result = this.run();
 		WritableReference out = Ciel.RPC.getOutputFilename(0);
@@ -19,7 +18,6 @@ public abstract class SingleOutputTask<T> implements FirstClassJavaTask {
 		oos.close();
 	}
 
-	@Override
 	public void setup() {
 		;
 	}

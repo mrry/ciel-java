@@ -1,4 +1,4 @@
-package skywriting.examples.smithwaterman;
+package com.asgow.ciel.examples.smithwaterman;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

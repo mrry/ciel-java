@@ -2,7 +2,6 @@ package com.asgow.ciel.rpc;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -213,12 +212,10 @@ public class JsonPipeRpc implements WorkerRpc {
 	
 	}
 
-	@Override
 	public Reference closeNewObject(WritableReference wref) {
 		return closeOutput(wref.getIndex());
 	}
 
-	@Override
 	public Reference closeOutput(int index) {
 		JsonObject args = new JsonObject();
 		args.add("index", new JsonPrimitive(index));
@@ -226,7 +223,6 @@ public class JsonPipeRpc implements WorkerRpc {
 		return Reference.fromJson(response.getAsJsonObject("ref"));
 	}
 
-	@Override
 	public Reference closeOutput(int index, long final_size) {
 		JsonObject args = new JsonObject();
 		args.add("index", new JsonPrimitive(index));
@@ -235,14 +231,12 @@ public class JsonPipeRpc implements WorkerRpc {
 		return Reference.fromJson(response.getAsJsonObject("ref"));
 	}
 
-	@Override
 	public void error(String errorMessage) {
 		JsonObject args = new JsonObject();
 		args.add("report", new JsonPrimitive(errorMessage));
 		this.sendMessage(ERROR, args);
 	}
 
-	@Override
 	public void exit(boolean fixed) {
 		JsonObject args = new JsonObject();
 		if(fixed) {
@@ -255,12 +249,10 @@ public class JsonPipeRpc implements WorkerRpc {
 		this.sendMessage(EXIT, args);
 	}
 
-	@Override
 	public String getFilenameForReference(Reference ref) {
 		return this.getFilenameForReference(ref, false);
 	}
 
-	@Override
 	public String getFilenameForReference(Reference ref, boolean makeSweetheart) {
 		JsonObject args = new JsonObject();
 		args.add("ref", ref.toJson());
@@ -273,7 +265,6 @@ public class JsonPipeRpc implements WorkerRpc {
 		}
 	}
 	
-	@Override
 	public InputStream getStreamForReference(Reference ref, int chunk_size, boolean sole_consumer, boolean make_sweetheart, boolean must_block) throws IOException {
 		JsonObject args = new JsonObject();
 		args.add("ref", ref.toJson());
@@ -290,18 +281,15 @@ public class JsonPipeRpc implements WorkerRpc {
 		
 	}
 	
-	@Override
 	public InputStream getStreamForReference(Reference ref, int chunk_size) throws IOException {
 		return getStreamForReference(ref, chunk_size, false, false, false);
 	}
 	
-	@Override
 	public InputStream getStreamForReference(Reference ref) throws IOException {
 		// 64M chunks suit everybody... right?
 		return getStreamForReference(ref, 1024*1024*64, false, false, false);
 	}
 	
-	@Override
 	public void closeAsyncInput(String id, int chunk_size) {
 		JsonObject args = new JsonObject();
 		args.addProperty("id", id);
@@ -309,7 +297,6 @@ public class JsonPipeRpc implements WorkerRpc {
 		this.sendMessage(CLOSE_STREAM, args);
 	}
 	
-	@Override
 	public WaitAsyncInputResponse waitAsyncInput(String refid, boolean eof, long bytes) {
 		JsonObject args = new JsonObject();
 		args.addProperty("id", refid);
@@ -326,7 +313,6 @@ public class JsonPipeRpc implements WorkerRpc {
 		return new WaitAsyncInputResponse(size, done, success);
 	}
 	
-	@Override
 	public WritableReference getNewObjectFilename(String refPrefix) {
 		JsonObject args = new JsonObject();
 		args.add("prefix", new JsonPrimitive(refPrefix));
@@ -337,7 +323,6 @@ public class JsonPipeRpc implements WorkerRpc {
 		return this.getOutputFilename(index);
 	}
 
-	@Override
 	public WritableReference getOutputFilename(int index, boolean may_stream, boolean may_pipe, boolean make_local_sweetheart) {
 		JsonObject args = new JsonObject();
 		args.add("index", new JsonPrimitive(index));
@@ -350,12 +335,10 @@ public class JsonPipeRpc implements WorkerRpc {
 		return new WritableReference(response.get("filename").getAsString(), index, !may_pipe);
 	}
 	
-	@Override
 	public WritableReference getOutputFilename(int index) {
 		return getOutputFilename(index, false, false, false);
 	}
 
-	@Override
 	public Reference[] spawnTask(TaskInformation taskInfo) {
 		JsonObject args = taskInfo.toJson();
 		JsonArray response = this.sendReceiveMessage(SPAWN, args).getAsJsonArray().get(1).getAsJsonArray();
@@ -367,7 +350,6 @@ public class JsonPipeRpc implements WorkerRpc {
 		return ret;
 	}
 	
-	@Override
 	public void tailSpawnTask(TaskInformation taskInfo) {
 		JsonObject args = taskInfo.toJson();
 		this.sendMessage(TAIL_SPAWN, args);

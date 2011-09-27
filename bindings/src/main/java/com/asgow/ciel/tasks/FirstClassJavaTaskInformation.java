@@ -42,7 +42,6 @@ public class FirstClassJavaTaskInformation implements TaskInformation {
 		this.dependencies.add(ref);
 	}
 	
-	@Override
 	public JsonObject toJson() {
 		JsonObject ret = new JsonObject();
 		

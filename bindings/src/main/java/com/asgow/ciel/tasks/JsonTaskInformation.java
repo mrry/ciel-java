@@ -10,7 +10,6 @@ public class JsonTaskInformation implements TaskInformation {
 		this.info = info;
 	}
 	
-	@Override
 	public JsonObject toJson() {
 		return this.info;
 	}
